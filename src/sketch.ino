@@ -51,7 +51,6 @@ void setup()
 
 void loop()
 {
-  read_pin_value = analogRead(read_pin);
 
   // Show raw sensor data on line 0
   /*
@@ -86,6 +85,7 @@ void loop()
 	  // Track distance traveled.
 	  delay(SENSOR_DELAY);
 
+	  read_pin_value = analogRead(read_pin);
 	  // If we've triggered the sensor... 
 	  if(read_pin_value > SENSOR_TRIGGER)
 	  {
@@ -99,9 +99,9 @@ void loop()
   mph = inches_traveled * INCH_PER_100_MILISECOND_TO_MPH;
   lcd.setCursor(0,0);
   lcd.print("MPH: ");
-  lcd.setCursor(4,0);
+  lcd.setCursor(5,0);
   lcd.print("             ");
-  lcd.setCursor(4,0);
+  lcd.setCursor(5,0);
   lcd.print(mph, DEC);
 
   // Display total inches on second line
@@ -110,6 +110,6 @@ void loop()
   lcd.setCursor(10,1);
   lcd.print("             ");
   lcd.setCursor(10,1);
-  lcd.print(mph, DEC);
+  lcd.print(total_inches_traveled, DEC);
  
 }
