@@ -37,6 +37,7 @@ void loop()
 {
   read_pin_value = analogRead(read_pin);
   // Serial.println(read_pin_value);
-  lcd.print("Raw" + read_pin_value);
+  lcd.print("Sensor value: ");
+  lcd.print(read_pin_value, DEC);
   delay(10);
 }
