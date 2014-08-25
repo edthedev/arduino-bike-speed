@@ -27,8 +27,8 @@ int INCHES_PER_MILE = 63360;
 int MILISECONDS_PER_HOUR = 3600000;
 int TIRE_INCHES_DIAMETER = 27;
 
-int SENSOR_TRIGGER = 1000;
-int SENSOR_DELAY = 250; 
+int SENSOR_TRIGGER = 1019;
+int SENSOR_DELAY = 125; // Measure every 1/8 second
 
 int inches_traveled = 0;
 int miles_traveled = 0;
