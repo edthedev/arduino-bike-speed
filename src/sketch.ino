@@ -21,7 +21,8 @@
 
 //storage variable
 int read_pin_value;
-
+int INCHES_PER_MILE = 63360;
+int MILISECONDS_PER_HOUR = 3600000;
 
 LiquidCrystal lcd( 8, 9, 4, 5, 6, 7 );
 
