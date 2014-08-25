@@ -19,19 +19,26 @@
 #define read_pin A1
 #define hot_pin A2
 
+// About the bike
+int TIRE_INCHES_DIAMETER = 27;
+
 //storage variable
 int read_pin_value;
 
 // Distance constants for United States
-// int INCHES_PER_MILE = 63360;
+int INCHES_PER_MILE = 63360;
 // int MILISECONDS_PER_HOUR = 3600000;
-// int TIRE_INCHES_DIAMETER = 27;
+//
+double INCH_PER_100_MILISECOND_TO_MPH = .568181818;
+double mph;
+
 
 int SENSOR_TRIGGER = 1019;
-int SENSOR_DELAY = 125; // Measure every 1/8 second
+int SENSOR_DELAY = 100; // Measure every 1/8 second
 
 int inches_traveled = 0;
-int miles_traveled = 0;
+int total_inches_traveled = 0;
+// double miles_traveled = 0;
 
 LiquidCrystal lcd( 8, 9, 4, 5, 6, 7 );
 
@@ -57,14 +64,9 @@ void loop()
   delay(SENSOR_DELAY);
   */
  
-  // If we've triggered the sensor... 
-  if(read_pin_value > SENSOR_TRIGGER)
-  {
-	// We've traveled another 27 inches.
-	inches_traveled += TIRE_INCHES_DIAMETER;
-  }
 
   // Show inches traveled on both lines
+  /*
   lcd.setCursor(0,0);
   lcd.print("Inches this trip: ");
   lcd.setCursor(0,1);
@@ -72,5 +74,42 @@ void loop()
   lcd.setCursor(0,1);
   lcd.print(inches_traveled, DEC);
   delay(SENSOR_DELAY);
+  */
+
+  // Compute miles traveled.
+  // miles_traveled += (inches_traveled / INCHES_PER_MILE);
+
+  inches_traveled = 0;
+  // Loop is tuned to be about 1 second long.
+  for(int i=0; i<10; i++)
+  {
+	  // Track distance traveled.
+	  delay(SENSOR_DELAY);
+
+	  // If we've triggered the sensor... 
+	  if(read_pin_value > SENSOR_TRIGGER)
+	  {
+		// We've traveled another 27 inches.
+		total_inches_traveled += TIRE_INCHES_DIAMETER;
+	  }
+
+  } 
+ 
+  // Display MPH on top line
+  mph = inches_traveled * INCH_PER_100_MILISECOND_TO_MPH;
+  lcd.setCursor(0,0);
+  lcd.print("MPH: ");
+  lcd.setCursor(4,0);
+  lcd.print("             ");
+  lcd.setCursor(4,0);
+  lcd.print(mph, DEC);
+
+  // Display total inches on second line
+  lcd.setCursor(0,1);
+  lcd.print("Traveled: ");
+  lcd.setCursor(10,1);
+  lcd.print("             ");
+  lcd.setCursor(10,1);
+  lcd.print(mph, DEC);
  
 }
