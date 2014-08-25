@@ -23,9 +23,9 @@
 int read_pin_value;
 
 // Distance constants for United States
-int INCHES_PER_MILE = 63360;
-int MILISECONDS_PER_HOUR = 3600000;
-int TIRE_INCHES_DIAMETER = 27;
+// int INCHES_PER_MILE = 63360;
+// int MILISECONDS_PER_HOUR = 3600000;
+// int TIRE_INCHES_DIAMETER = 27;
 
 int SENSOR_TRIGGER = 1019;
 int SENSOR_DELAY = 125; // Measure every 1/8 second
@@ -40,10 +40,6 @@ void setup()
   lcd.begin(16, 2);
   // Make hot pin hot.
   digitalWrite(hot_pin, HIGH);
-}
-
-void increment()
-{
 }
 
 void loop()
@@ -77,5 +73,4 @@ void loop()
   lcd.print(inches_traveled, DEC);
   delay(SENSOR_DELAY);
  
-
 }
