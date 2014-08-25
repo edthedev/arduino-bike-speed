@@ -90,10 +90,11 @@ void loop()
 	  if(read_pin_value > SENSOR_TRIGGER)
 	  {
 		// We've traveled another 27 inches.
-		total_inches_traveled += TIRE_INCHES_DIAMETER;
+		inches_traveled += TIRE_INCHES_DIAMETER;
 	  }
 
   } 
+  total_inches_traveled += inches_traveled;
  
   // Display MPH on top line
   mph = inches_traveled * INCH_PER_100_MILISECOND_TO_MPH;
