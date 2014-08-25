@@ -21,8 +21,17 @@
 
 //storage variable
 int read_pin_value;
+
+// Distance constants for United States
 int INCHES_PER_MILE = 63360;
 int MILISECONDS_PER_HOUR = 3600000;
+int TIRE_INCHES_DIAMETER = 27;
+
+int SENSOR_TRIGGER = 1000;
+int SENSOR_DELAY = 250; 
+
+int inches_traveled = 0;
+int miles_traveled = 0;
 
 LiquidCrystal lcd( 8, 9, 4, 5, 6, 7 );
 
@@ -33,15 +42,40 @@ void setup()
   digitalWrite(hot_pin, HIGH);
 }
 
+void increment()
+{
+}
+
 void loop()
 {
   read_pin_value = analogRead(read_pin);
-  // Serial.println(read_pin_value);
+
+  // Show raw sensor data on line 0
+  /*
   lcd.setCursor(0,0);
   lcd.print("Sensor: ");
   lcd.setCursor(9,0);
   lcd.print("    ");
   lcd.setCursor(9,0);
   lcd.print(read_pin_value, DEC);
-  delay(10);
+  delay(SENSOR_DELAY);
+  */
+ 
+  // If we've triggered the sensor... 
+  if(read_pin_value > SENSOR_TRIGGER)
+  {
+	// We've traveled another 27 inches.
+	inches_traveled += TIRE_INCHES_DIAMETER;
+  }
+
+  // Show inches traveled on both lines
+  lcd.setCursor(0,0);
+  lcd.print("Inches this trip: ");
+  lcd.setCursor(0,1);
+  lcd.print("         ");
+  lcd.setCursor(0,1);
+  lcd.print(inches_traveled, DEC);
+  delay(SENSOR_DELAY);
+ 
+
 }
