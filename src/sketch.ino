@@ -28,7 +28,6 @@ LiquidCrystal lcd( 8, 9, 4, 5, 6, 7 );
 void setup()
 {
   lcd.begin(16, 2);
-  lcd.print("hello, world!");
   // Make hot pin hot.
   digitalWrite(hot_pin, HIGH);
 }
@@ -39,7 +38,9 @@ void loop()
   // Serial.println(read_pin_value);
   lcd.setCursor(0,0);
   lcd.print("Sensor: ");
-  lcd.setCursor(0,1);
+  lcd.setCursor(9,0);
+  lcd.print("    ");
+  lcd.setCursor(9,0);
   lcd.print(read_pin_value, DEC);
   delay(10);
 }
