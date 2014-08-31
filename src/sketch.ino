@@ -23,7 +23,7 @@
 int TIRE_INCHES_DIAMETER = 27;
 
 //storage variable
-int read_pin_value;
+int sensor_value;
 
 // Distance constants for United States
 int INCHES_PER_MILE = 63360;
@@ -34,11 +34,16 @@ double mph;
 
 
 int SENSOR_TRIGGER = 1019;
-int SENSOR_DELAY = 100; // Measure every 1/8 second
+int SENSOR_DELAY = 50; 
 
 int inches_traveled = 0;
 int total_inches_traveled = 0;
 // double miles_traveled = 0;
+//
+//
+// New method for counting revolutions
+int revolutions = 0;
+int found_magnet = 0;
 
 LiquidCrystal lcd( 8, 9, 4, 5, 6, 7 );
 
@@ -49,18 +54,65 @@ void setup()
   digitalWrite(hot_pin, HIGH);
 }
 
+void do_sensor()
+{
+  // Always update the sensor
+  sensor_value = analogRead(read_pin);
+
+  if(found_magnet == 1)
+  {
+	  // Did we just leave the magnet?
+	  if(sensor_value < SENSOR_TRIGGER)
+	  {
+		  // Add a revolution
+		  revolutions += 1;
+		  // We're no longer seeing magnet.
+		  found_magnet = 0;
+	  }
+  }
+
+  // See if we've just found the magnet.
+  if(sensor_value > SENSOR_TRIGGER)
+  {
+	found_magnet = 1;
+  }
+}
+
+void do_display()
+{
+  // found_magnet at 0,0
+  lcd.setCursor(0,0);
+  lcd.print(found_magnet);
+
+  // sensor raw value at 2,0 through 5,0
+  lcd.setCursor(2,0);
+  lcd.print("    ");
+  lcd.setCursor(2,0);
+  lcd.print(sensor_value);
+
+  // revolutions at 0,1
+  lcd.setCursor(0,1);
+  lcd.print(revolutions);
+}
+
 void loop()
 {
+  // Strongly favor gathering data over displaying it.
+  for(int i; i<100;i++)
+  {
+	  do_sensor();
+	  delay(SENSOR_DELAY);
+  }
+  do_display();
 
-  // Show raw sensor data on line 0
+  // Show raw sensor data on line 0 
   /*
   lcd.setCursor(0,0);
   lcd.print("Sensor: ");
   lcd.setCursor(9,0);
   lcd.print("    ");
   lcd.setCursor(9,0);
-  lcd.print(read_pin_value, DEC);
-  delay(SENSOR_DELAY);
+  lcd.print(sensor_value, DEC);
   */
  
 
@@ -78,6 +130,7 @@ void loop()
   // Compute miles traveled.
   // miles_traveled += (inches_traveled / INCHES_PER_MILE);
 
+  /* 
   inches_traveled = 0;
   // Loop is tuned to be about 1 second long.
   for(int i=0; i<10; i++)
@@ -85,9 +138,9 @@ void loop()
 	  // Track distance traveled.
 	  delay(SENSOR_DELAY);
 
-	  read_pin_value = analogRead(read_pin);
+	  sensor_value = analogRead(read_pin);
 	  // If we've triggered the sensor... 
-	  if(read_pin_value > SENSOR_TRIGGER)
+	  if(sensor_value > SENSOR_TRIGGER)
 	  {
 		// We've traveled another 27 inches.
 		inches_traveled += TIRE_INCHES_DIAMETER;
@@ -112,5 +165,6 @@ void loop()
   lcd.print("             ");
   lcd.setCursor(10,1);
   lcd.print(total_inches_traveled, DEC);
+  */
  
 }
