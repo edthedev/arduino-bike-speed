@@ -18,6 +18,7 @@
 //pin connected to read switch
 #define read_pin A1
 #define hot_pin A2
+#define LCD_POWER 2
 
 // About the bike
 int TIRE_INCHES_DIAMETER = 27;
@@ -45,13 +46,17 @@ int total_inches_traveled = 0;
 int revolutions = 0;
 int found_magnet = 0;
 
-LiquidCrystal lcd( 8, 9, 4, 5, 6, 7 );
+// For LCD Shield:  LiquidCrystal lcd( 8, 9, 4, 5, 6, 7 );
+//
+// For raw LCD with Nano
+LiquidCrystal lcd( 9, 8, 4, 5, 6, 7 );
 
 void setup()
 {
   lcd.begin(16, 2);
   // Make hot pin hot.
   digitalWrite(hot_pin, HIGH);
+  digitalWrite(LCD_POWER, HIGH);
 }
 
 void do_sensor()
