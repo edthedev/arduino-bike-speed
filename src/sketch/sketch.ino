@@ -15,42 +15,54 @@
 #include <Wire.h>
 
 //pin connected to read switch
-#define read_pin A1
-#define hot_pin D1
+// #define read_pin A1
+// #define hot1 D1
 
 //storage variable
 int sensor_value;
+long sensor1;
+long sensor2;
+long sensor3;
 
 int SENSOR_TRIGGER = 1019;
-int SENSOR_DELAY = 50; 
+int SENSOR_DELAY = 500; 
 
 void setup()
 {
+  Serial.begin(9600);
   // Make hot pin hot.
-  digitalWrite(D1, HIGH);
-  digitalWrite(D2, HIGH);
-  digitalWrite(D3, HIGH);
+  digitalWrite(1, HIGH);
+  digitalWrite(2, HIGH);
+  digitalWrite(3, HIGH);
 }
 
 void do_sensor()
 {
   // Always update the sensor
-  sensor1 = analogRead(A1);
-  sensor2 = analogRead(A2);
-  sensor3 = analogRead(A3);
-  serial.write
-  Serial.print("Sensor value 1", sensor1);
-  Serial.print("Sensor value 2", sensor1);
-  Serial.print("Sensor value 3", sensor1);
+  digitalWrite(13, HIGH);
+  sensor1 = analogRead(1);
+  sensor2 = analogRead(2);
+  sensor3 = analogRead(3);
+  Serial.print("\n");
+  Serial.print("Sensor value 1 ");
+  Serial.print(sensor1);
+  Serial.print("\n");
+  Serial.print("Sensor value 2 ");
+  Serial.print(sensor2);
+  Serial.print("\n");
+  Serial.print("Sensor value 3 ");
+  Serial.print(sensor3);
+  Serial.print("\n");
+  digitalWrite(13, LOW);
+  delay(SENSOR_DELAY);
 }
 
 void loop()
 {
   // Strongly favor gathering data over displaying it.
-  for(int i; i<100;i++)
-  {
-	  do_sensor();
-	  delay(SENSOR_DELAY);
-  }
+  //for(int i; i<100;i++)
+  //{
+  //}
+  do_sensor();
   // do_display();
 }
