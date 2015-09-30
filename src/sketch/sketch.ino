@@ -31,18 +31,18 @@ void setup()
 {
   Serial.begin(9600);
   // Make hot pin hot.
-  digitalWrite(1, HIGH);
+  digitalWrite(0, HIGH);
   digitalWrite(2, HIGH);
-  digitalWrite(3, HIGH);
+  digitalWrite(7, HIGH);
 }
 
 void do_sensor()
 {
   // Always update the sensor
   digitalWrite(13, HIGH);
-  sensor1 = analogRead(1);
-  sensor2 = analogRead(2);
-  sensor3 = analogRead(3);
+  sensor1 = analogRead(0);
+  sensor2 = analogRead(4);
+  sensor3 = analogRead(5);
   Serial.print("\n");
   Serial.print("Sensor value 1 ");
   Serial.print(sensor1);
